@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="A responsive expense tracker that saves expenses in your browser.">
+    <title>SpendWise | Expense Tracker</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Manrope:wght@500;600;700;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="app-shell">
+        <aside class="sidebar">
+            <a class="brand" href="#"><span class="brand-icon">S</span><span>Spend<span
+                        class="brand-light">Wise</span></span></a>
+            <div class="side-label">WORKSPACE</div>
+            <a class="nav-link active" href="#overview"><span>▦</span> Overview</a>
+            <a class="nav-link" href="#transactions"><span>↕</span> Transactions</a>
+            <div class="sidebar-bottom">
+                <div class="tip-card"><span class="tip-icon">✦</span><strong>Small steps add up.</strong>
+                    <p>Track your spending today and build better money habits tomorrow.</p>
+                </div>
+                <div class="profile">
+                    <div class="avatar">U</div>
+                    <div><strong>Your Wallet</strong><small>Personal account</small></div>
+                </div>
+            </div>
+        </aside>
+
+        <main class="main-content" id="overview">
+            <header class="topbar">
+                <div>
+                    <p class="eyebrow">PERSONAL FINANCE</p>
+                    <h1>Expense overview</h1>
+                    <p class="subheading">Keep an eye on where your money goes.</p>
+                </div>
+                <div class="today-chip"><span class="live-dot"></span><span id="todayLabel">Today</span></div>
+            </header>
+
+            <section class="summary-grid" aria-label="Expense summary">
+                <article class="summary-card total-card">
+                    <div class="card-top"><span>Total expenses</span><span class="summary-icon">₹</span></div>
+                    <h2 id="totalAmount">₹0.00</h2>
+                    <p>Based on your selected filters</p>
+                </article>
+                <article class="summary-card">
+                    <div class="card-top"><span>Transactions</span><span class="summary-icon purple">↗</span></div>
+                    <h2 id="transactionCount">0</h2>
+                    <p>Recorded expenses</p>
+                </article>
+                <article class="summary-card">
+                    <div class="card-top"><span>Average expense</span><span class="summary-icon orange">⌁</span></div>
+                    <h2 id="averageAmount">₹0.00</h2>
+                    <p>Per transaction</p>
+                </article>
+            </section>
+
+            <section class="content-grid">
+                <section class="panel form-panel">
+                    <div class="panel-heading">
+                        <div>
+                            <p class="eyebrow">NEW RECORD</p>
+                            <h2 id="formTitle">Add an expense</h2>
+                        </div><span class="plus-mark">＋</span>
+                    </div>
+                    <form id="expenseForm">
+                        <label for="title">Expense name</label>
+                        <input id="title" type="text" maxlength="45" placeholder="e.g. Grocery shopping" required>
+                        <div class="form-row">
+                            <div><label for="amount">Amount (₹)</label><input id="amount" type="number" min="0.01"
+                                    step="0.01" placeholder="0.00" required></div>
+                            <div><label for="category">Category</label><select id="category" required>
+                                    <option value="">Choose</option>
+                                    <option>Food</option>
+                                    <option>Transport</option>
+                                    <option>Shopping</option>
+                                    <option>Bills</option>
+                                    <option>Health</option>
+                                    <option>Entertainment</option>
+                                    <option>Education</option>
+                                    <option>Other</option>
+                                </select></div>
+                        </div>
+                        <label for="date">Date</label><input id="date" type="date" required>
+                        <label for="notes">Notes <span class="optional">(optional)</span></label><textarea id="notes"
+                            rows="2" maxlength="120" placeholder="Add a short note..."></textarea>
+                        <div class="form-actions"><button class="btn-primary" id="submitBtn" type="submit">＋ Add
+                                expense</button><button class="btn-text hidden" id="cancelEdit"
+                                type="button">Cancel</button></div>
+                        <p class="form-message" id="formMessage" role="status"></p>
+                    </form>
+                </section>
+
+                <section class="panel transactions-panel" id="transactions">
+                    <div class="transactions-header">
+                        <div>
+                            <p class="eyebrow">YOUR ACTIVITY</p>
+                            <h2>Recent transactions</h2>
+                        </div><span class="record-count" id="recordCount">0 records</span>
+                    </div>
+                    <div class="filters">
+                        <div class="filter-field"><label for="searchInput">Search</label><input id="searchInput"
+                                type="search" placeholder="Find an expense..."></div>
+                        <div class="filter-field"><label for="filterCategory">Category</label><select
+                                id="filterCategory">
+                                <option value="all">All categories</option>
+                                <option>Food</option>
+                                <option>Transport</option>
+                                <option>Shopping</option>
+                                <option>Bills</option>
+                                <option>Health</option>
+                                <option>Entertainment</option>
+                                <option>Education</option>
+                                <option>Other</option>
+                            </select></div>
+                        <div class="filter-field"><label for="filterDate">Date</label><input id="filterDate"
+                                type="date"></div>
+                        <div class="filter-field"><label for="sortBy">Sort by</label><select id="sortBy">
+                                <option value="newest">Newest first</option>
+                                <option value="oldest">Oldest first</option>
+                                <option value="high">Amount: high to low</option>
+                                <option value="low">Amount: low to high</option>
+                            </select></div>
+                    </div>
+                    <div class="table-wrap">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>DESCRIPTION</th>
+                                    <th>CATEGORY</th>
+                                    <th>DATE</th>
+                                    <th>AMOUNT</th>
+                                    <th>ACTIONS</th>
+                                </tr>
+                            </thead>
+                            <tbody id="expenseList"></tbody>
+                        </table>
+                        <div class="empty-state" id="emptyState">
+                            <div class="empty-icon">⌁</div><strong>No expenses found</strong>
+                            <p>Add an expense or adjust your filters to see your activity.</p>
+                        </div>
+                    </div>
+                    <div class="list-footer"><span id="footerText">Your expenses are saved on this device.</span><button
+                            class="clear-btn" id="clearFilters" type="button">Clear filters</button></div>
+                </section>
+            </section>
+            <footer>SpendWise <span>•</span> Your data stays in this browser using LocalStorage.</footer>
+        </main>
+    </div>
+    <script src="script.js"></script>
+</body>
+
+</html>
